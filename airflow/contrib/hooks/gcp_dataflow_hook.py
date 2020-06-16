@@ -141,8 +141,9 @@ class _Dataflow(LoggingMixin):
     @staticmethod
     def _extract_job(line):
         # Job id info: https://goo.gl/SE29y9.
+        # [EWT-361] : Fixes out of date regex to extract job id
         job_id_pattern = re.compile(
-            br'.*console.cloud.google.com/dataflow.*/jobs/([a-z|0-9|A-Z|\-|\_]+).*')
+            br'.*console.cloud.google.com\/dataflow.*\/jobs\/[a-z|0-9|A-Z|\-|\_]+\/([a-z|0-9|A-Z|\-|\_]+).*')
         matched_job = job_id_pattern.search(line or '')
         if matched_job:
             return matched_job.group(1).decode()
